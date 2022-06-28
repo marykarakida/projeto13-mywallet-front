@@ -31,76 +31,6 @@ export default function Ledger() {
 						<p>Freela</p>
 						<p>30,00</p>
 					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
 				</AccountList>
 				{/* <NoAccountsMessage>
 					Não há registros de entrada ou saída
@@ -113,10 +43,6 @@ export default function Ledger() {
 		</Container>
 	);
 }
-
-// position: fixed;
-// top: 72px;
-// bottom: 144px;
 
 const Container = styled.div`
 	position: fixed;
