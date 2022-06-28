@@ -1,3 +1,19 @@
+import styled from 'styled-components';
+
+import Withdraw from '../components/Withdraw';
+
 export default function WithdrawPage() {
-	return <h1>This is Withdraw Page</h1>;
+	return (
+		<Page>
+			<Withdraw />
+		</Page>
+	);
 }
+
+const Page = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100vh;
+	width: 100%;
+`;
