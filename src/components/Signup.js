@@ -2,17 +2,26 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Login() {
+export default function LoginPage() {
+	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-	const loginToApp = (event) => {
+	const registerUser = (event) => {
 		event.preventDefault();
 	};
 
 	return (
 		<Container>
-			<Forms onSubmit={loginToApp}>
+			<Forms onSubmit={registerUser}>
+				<input
+					required
+					type="text"
+					placeholder="Nome"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+				/>
 				<input
 					required
 					type="email"
@@ -27,9 +36,16 @@ export default function Login() {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
+				<input
+					required
+					type="password"
+					placeholder="Confirme a senha"
+					value={passwordConfirmation}
+					onChange={(e) => setPasswordConfirmation(e.target.value)}
+				/>
 				<Button type="submit">Entrar</Button>
 			</Forms>
-			<SignupLink to="/cadastro">Primeira vez? Cadastre-se!</SignupLink>
+			<LoginLink to="/">Já tem uma conta? Entre agora!</LoginLink>
 		</Container>
 	);
 }
@@ -75,7 +91,7 @@ const Button = styled.button`
 	cursor: pointer;
 `;
 
-const SignupLink = styled(Link)`
+const LoginLink = styled(Link)`
 	margin: 36px 0;
 	font-weight: 700;
 	font-size: 15px;
