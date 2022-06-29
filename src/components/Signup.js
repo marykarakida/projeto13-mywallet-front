@@ -1,8 +1,11 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+	const navigate = useNavigate();
+
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -10,6 +13,21 @@ export default function LoginPage() {
 
 	const registerUser = (event) => {
 		event.preventDefault();
+
+		const user = {
+			name,
+			email,
+			password,
+			passwordConfirmation,
+		};
+
+		const promise = axios.post('http://localhost:5000/auth/sign-up', user);
+		promise.then(() => {
+			navigate('/', { replace: true });
+		});
+		promise.catch((err) => {
+			alert(err.response.message);
+		});
 	};
 
 	return (
@@ -35,6 +53,7 @@ export default function LoginPage() {
 					placeholder="Senha"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
+					minLength={8}
 				/>
 				<input
 					required
@@ -43,7 +62,7 @@ export default function LoginPage() {
 					value={passwordConfirmation}
 					onChange={(e) => setPasswordConfirmation(e.target.value)}
 				/>
-				<Button type="submit">Entrar</Button>
+				<Button type="submit">Cadastrar</Button>
 			</Forms>
 			<LoginLink to="/">Já tem uma conta? Entre agora!</LoginLink>
 		</Container>
