@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
@@ -10,6 +10,14 @@ export default function LoginPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+	useEffect(() => {
+		const locallyStoredToken = localStorage.getItem('token');
+
+		if (locallyStoredToken !== null) {
+			navigate('/home', { replace: true });
+		}
+	}, []);
 
 	const registerUser = (event) => {
 		event.preventDefault();
@@ -26,7 +34,7 @@ export default function LoginPage() {
 			navigate('/', { replace: true });
 		});
 		promise.catch((err) => {
-			alert(err.response.message);
+			alert(err.response.data);
 		});
 	};
 

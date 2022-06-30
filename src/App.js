@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import { UserContextProvider } from './contexts/UserContext';
 import GlobalStyles from './globalStyles';
 
 import LoginPage from './pages/LoginPage';
@@ -10,16 +11,18 @@ import WithdrawPage from './pages/WithdrawPage';
 
 function App() {
 	return (
-		<BrowserRouter>
-			<GlobalStyles />
-			<Routes>
-				<Route path="/" element={<LoginPage />} />
-				<Route path="/cadastro" element={<SignupPage />} />
-				<Route path="/home" element={<HomePage />} />
-				<Route path="/deposito" element={<DepositPage />} />
-				<Route path="/saque" element={<WithdrawPage />} />
-			</Routes>
-		</BrowserRouter>
+		<UserContextProvider>
+			<BrowserRouter>
+				<GlobalStyles />
+				<Routes>
+					<Route path="/" element={<LoginPage />} />
+					<Route path="/cadastro" element={<SignupPage />} />
+					<Route path="/home" element={<HomePage />} />
+					<Route path="/deposito" element={<DepositPage />} />
+					<Route path="/saque" element={<WithdrawPage />} />
+				</Routes>
+			</BrowserRouter>
+		</UserContextProvider>
 	);
 }
 
