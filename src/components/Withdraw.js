@@ -7,7 +7,7 @@ import UserContext from '../contexts/UserContext';
 
 export default function Withdraw() {
 	const navigate = useNavigate();
-	const { token } = useContext(UserContext);
+	const { userData } = useContext(UserContext);
 
 	const [value, setValue] = useState('');
 	const [description, setDescription] = useState('');
@@ -18,7 +18,7 @@ export default function Withdraw() {
 		const account = { value, description, type: 'withdraw' };
 
 		const promise = axios.post('http://localhost:5000/accounts/', account, {
-			headers: { Authorization: `Bearer ${token}` },
+			headers: { Authorization: `Bearer ${userData.token}` },
 		});
 		promise
 			.then(() => {

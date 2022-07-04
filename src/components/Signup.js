@@ -12,9 +12,9 @@ export default function LoginPage() {
 	const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
 	useEffect(() => {
-		const locallyStoredToken = localStorage.getItem('token');
+		const locallyStoredUserData = localStorage.getItem('userData');
 
-		if (locallyStoredToken !== null) {
+		if (locallyStoredUserData !== null) {
 			navigate('/home', { replace: true });
 		}
 	}, []);

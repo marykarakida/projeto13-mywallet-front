@@ -1,10 +1,22 @@
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import UserContext from '../contexts/UserContext';
 
 export default function Header() {
+	const navigate = useNavigate();
+	const { userData } = useContext(UserContext);
+
+	function logout() {
+		localStorage.removeItem('userData');
+		navigate('/');
+	}
+
 	return (
 		<Container>
-			<h2>Olá, Fulano</h2>
-			<ion-icon name="enter-outline" />
+			<h2>Olá, {userData.name}</h2>
+			<ion-icon name="enter-outline" onClick={logout} />
 		</Container>
 	);
 }
@@ -28,5 +40,6 @@ const Container = styled.div`
 
 	ion-icon {
 		font-size: 24px;
+		cursor: pointer;
 	}
 `;

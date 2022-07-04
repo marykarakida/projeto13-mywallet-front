@@ -5,14 +5,14 @@ import { useContext, useEffect, useState } from 'react';
 import UserContext from '../contexts/UserContext';
 
 export default function Ledger() {
-	const { token } = useContext(UserContext);
+	const { userData } = useContext(UserContext);
 
 	const [accountList, setAccountList] = useState(null);
 	const [balance, setBalance] = useState(null);
 
 	useEffect(() => {
 		const promise = axios.get('http://localhost:5000/accounts/', {
-			headers: { Authorization: `Bearer ${token}` },
+			headers: { Authorization: `Bearer ${userData.token}` },
 		});
 		promise
 			.then((res) => {
@@ -55,7 +55,7 @@ export default function Ledger() {
 				{accounts}
 				<Balance balance={balance}>
 					<p>SALDO</p>
-					<p>{balance}</p>
+					<p>{Math.abs(balance)}</p>
 				</Balance>
 			</Accounts>
 		</Container>

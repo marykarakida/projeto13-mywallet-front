@@ -6,15 +6,15 @@ import UserContext from '../contexts/UserContext';
 
 export default function Login() {
 	const navigate = useNavigate();
-	const { setToken } = useContext(UserContext);
+	const { setUserData } = useContext(UserContext);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	useEffect(() => {
-		const locallyStoredToken = localStorage.getItem('token');
+		const locallyStoredUserData = localStorage.getItem('userData');
 
-		if (locallyStoredToken !== null) {
+		if (locallyStoredUserData !== null) {
 			navigate('/home', { replace: true });
 		}
 	}, []);
@@ -29,8 +29,7 @@ export default function Login() {
 
 		const promise = axios.post('http://localhost:5000/auth/login', user);
 		promise.then((res) => {
-			const { token } = res.data;
-			setToken(token);
+			setUserData(res.data);
 			navigate('/home', { replace: true });
 		});
 		promise.catch((err) => {

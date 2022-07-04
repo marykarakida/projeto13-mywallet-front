@@ -5,21 +5,21 @@ const UserContext = createContext();
 export function UserContextProvider(props) {
 	const { children } = props;
 
-	const [token, setToken] = useState('');
+	const [userData, setUserData] = useState('');
 
-	const locallyStoredToken = localStorage.getItem('token');
+	const locallyStoredUserData = localStorage.getItem('userData');
 
-	if (locallyStoredToken === null && token !== '') {
-		localStorage.setItem('token', token);
-	} else if (locallyStoredToken !== null && token === '') {
-		setToken(locallyStoredToken);
+	if (locallyStoredUserData === null && userData !== '') {
+		localStorage.setItem('userData', JSON.stringify(userData));
+	} else if (locallyStoredUserData !== null && userData === '') {
+		setUserData(JSON.parse(locallyStoredUserData));
 	}
 
 	return (
 		<UserContext.Provider
 			value={{
-				token,
-				setToken,
+				userData,
+				setUserData,
 			}}
 		>
 			{children}
