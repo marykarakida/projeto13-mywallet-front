@@ -11,9 +11,12 @@ export default function Ledger() {
 	const [balance, setBalance] = useState(null);
 
 	function getAccountsInfo() {
-		const promise = axios.get('http://localhost:5000/accounts/', {
-			headers: { Authorization: `Bearer ${userData.token}` },
-		});
+		const promise = axios.get(
+			'https://my-wallet-a.herokuapp.com/accounts/',
+			{
+				headers: { Authorization: `Bearer ${userData.token}` },
+			}
+		);
 		promise
 			.then((res) => {
 				const { accounts, totalBalance } = res.data;
@@ -34,7 +37,8 @@ export default function Ledger() {
 			return;
 		}
 		const promise = axios.delete(
-			`http://localhost:5000/accounts/${accountId}`,
+			`
+			https://my-wallet-a.herokuapp.com/accounts/${accountId}`,
 			{
 				headers: { Authorization: `Bearer ${userData.token}` },
 			}

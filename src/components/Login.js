@@ -27,7 +27,10 @@ export default function Login() {
 			password,
 		};
 
-		const promise = axios.post('http://localhost:5000/auth/login', user);
+		const promise = axios.post(
+			'https://my-wallet-a.herokuapp.com/auth/login',
+			user
+		);
 		promise.then((res) => {
 			setUserData(res.data);
 			navigate('/home', { replace: true });

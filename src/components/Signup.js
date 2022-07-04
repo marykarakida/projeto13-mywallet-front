@@ -29,7 +29,10 @@ export default function LoginPage() {
 			passwordConfirmation,
 		};
 
-		const promise = axios.post('http://localhost:5000/auth/sign-up', user);
+		const promise = axios.post(
+			'https://my-wallet-a.herokuapp.com/auth/sign-up',
+			user
+		);
 		promise.then(() => {
 			navigate('/', { replace: true });
 		});

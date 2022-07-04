@@ -26,9 +26,13 @@ export default function Deposit() {
 
 		const account = { value, description, type: 'deposit' };
 
-		const promise = axios.post('http://localhost:5000/accounts/', account, {
-			headers: { Authorization: `Bearer ${userData.token}` },
-		});
+		const promise = axios.post(
+			'https://my-wallet-a.herokuapp.com/accounts/',
+			account,
+			{
+				headers: { Authorization: `Bearer ${userData.token}` },
+			}
+		);
 		promise
 			.then(() => {
 				navigate('/home');
