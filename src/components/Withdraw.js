@@ -1,12 +1,32 @@
-import { useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import UserContext from '../contexts/UserContext';
 
 export default function Withdraw() {
+	const navigate = useNavigate();
+	const { token } = useContext(UserContext);
+
 	const [value, setValue] = useState('');
 	const [description, setDescription] = useState('');
 
 	const withdrawMoney = (event) => {
 		event.preventDefault();
+
+		const account = { value, description, type: 'withdraw' };
+
+		const promise = axios.post('http://localhost:5000/accounts/', account, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		promise
+			.then(() => {
+				navigate('/home');
+			})
+			.catch((err) => {
+				alert(err.response.data);
+			});
 	};
 
 	return (
@@ -17,10 +37,12 @@ export default function Withdraw() {
 			<Forms onSubmit={withdrawMoney}>
 				<input
 					required
-					type="text"
+					type="number"
 					placeholder="Valor"
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
+					min="0.01"
+					step="0.01"
 				/>
 				<input
 					required

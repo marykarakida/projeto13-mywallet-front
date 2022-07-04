@@ -1,14 +1,15 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
 	return (
 		<Container>
 			<Options>
-				<Option>
+				<Option to="/deposito">
 					<ion-icon name="add-circle-outline" />
 					<p>Nova entrada</p>
 				</Option>
-				<Option>
+				<Option to="/saque">
 					<ion-icon name="remove-circle-outline" />
 					<p>Nova saída</p>
 				</Option>
@@ -34,7 +35,7 @@ const Options = styled.div`
 	overflow-x: scroll;
 `;
 
-const Option = styled.div`
+const Option = styled(Link)`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
