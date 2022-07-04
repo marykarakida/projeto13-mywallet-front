@@ -1,43 +1,61 @@
+import axios from 'axios';
 import styled from 'styled-components';
-// import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
+import UserContext from '../contexts/UserContext';
 
 export default function Ledger() {
-	// const [accountList, setAccountList] = useState([]);
+	const { token } = useContext(UserContext);
 
-	// const showAccountsState = () => {
-	// 	if (accountList.length === 0) {
-	// 		return (
-	// 			<NoAccountsMessage>
-	// 				Não há registros de entrada ou saída
-	// 			</NoAccountsMessage>
-	// 		);
-	// 	}
-	// 	return '';
-	// };
+	const [accountList, setAccountList] = useState(null);
+	const [balance, setBalance] = useState(null);
 
-	// const accounts = showAccountsState();
+	useEffect(() => {
+		const promise = axios.get('http://localhost:5000/accounts/', {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		promise
+			.then((res) => {
+				const { accounts, totalBalance } = res.data;
+				setAccountList(accounts);
+				setBalance(totalBalance);
+			})
+			.catch((err) => {
+				alert(err.response.data);
+			});
+	}, []);
+
+	const showAccountsState = () => {
+		if (accountList === null) {
+			return (
+				<NoAccountsMessage>
+					Não há registros de entrada ou saída
+				</NoAccountsMessage>
+			);
+		}
+
+		return (
+			<AccountList>
+				{accountList.map(({ _id, type, date, value, description }) => (
+					<Account key={_id} type={type} id={_id}>
+						<p>{date}</p>
+						<p>{description}</p>
+						<p>{value}</p>
+					</Account>
+				))}
+			</AccountList>
+		);
+	};
+
+	const accounts = showAccountsState();
 
 	return (
 		<Container>
 			<Accounts>
-				<AccountList>
-					<Account type="negative">
-						<p>28/06</p>
-						<p>Comer</p>
-						<p>30,00</p>
-					</Account>
-					<Account type="positive">
-						<p>28/06</p>
-						<p>Freela</p>
-						<p>30,00</p>
-					</Account>
-				</AccountList>
-				{/* <NoAccountsMessage>
-					Não há registros de entrada ou saída
-				</NoAccountsMessage> */}
-				<Balance>
+				{accounts}
+				<Balance balance={balance}>
 					<p>SALDO</p>
-					<p>0</p>
+					<p>{balance}</p>
 				</Balance>
 			</Accounts>
 		</Container>
@@ -93,17 +111,16 @@ const Account = styled.div`
 
 	p:nth-of-type(3) {
 		margin-left: auto;
-		color: ${(props) =>
-			props.type === 'positive' ? '#03AC00' : '#C70000'};
+		color: ${(props) => (props.type === 'deposit' ? '#03AC00' : '#C70000')};
 	}
 `;
 
-// const NoAccountsMessage = styled.h3`
-// 	margin: auto;
-// 	padding: 0 70px;
-// 	text-align: center;
-// 	color: green;
-// `;
+const NoAccountsMessage = styled.h3`
+	margin: auto;
+	padding: 0 70px;
+	text-align: center;
+	color: #868686;
+`;
 
 const Balance = styled.div`
 	display: flex;
@@ -118,6 +135,6 @@ const Balance = styled.div`
 	}
 
 	p:nth-of-type(2) {
-		color: #03ac00;
+		color: ${(props) => (props.balance >= 0 ? '#03AC00' : '#C70000')};
 	}
 `;
