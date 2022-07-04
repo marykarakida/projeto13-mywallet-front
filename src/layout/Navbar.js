@@ -27,6 +27,15 @@ const Container = styled.div`
 	padding: 0 26px;
 	width: 100%;
 	max-width: 1248px;
+
+	div::-webkit-scrollbar {
+		display: none;
+	}
+
+	div {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 `;
 
 const Options = styled.div`

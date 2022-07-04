@@ -14,6 +14,15 @@ export default function Deposit() {
 
 	const depositMoney = (event) => {
 		event.preventDefault();
+		if (
+			!window.confirm(
+				`Você quer depositar ${Number(value)
+					.toFixed(2)
+					.replace('.', ',')}?`
+			)
+		) {
+			return;
+		}
 
 		const account = { value, description, type: 'deposit' };
 

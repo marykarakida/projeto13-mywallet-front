@@ -14,6 +14,13 @@ export default function Withdraw() {
 
 	const withdrawMoney = (event) => {
 		event.preventDefault();
+		if (
+			!window.confirm(
+				`Você quer sacar ${Number(value).toFixed(2).replace('.', ',')}?`
+			)
+		) {
+			return;
+		}
 
 		const account = { value, description, type: 'withdraw' };
 

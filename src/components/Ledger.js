@@ -10,7 +10,7 @@ export default function Ledger() {
 	const [accountList, setAccountList] = useState(null);
 	const [balance, setBalance] = useState(null);
 
-	useEffect(() => {
+	function getAccountsInfo() {
 		const promise = axios.get('http://localhost:5000/accounts/', {
 			headers: { Authorization: `Bearer ${userData.token}` },
 		});
@@ -23,7 +23,30 @@ export default function Ledger() {
 			.catch((err) => {
 				alert(err.response.data);
 			});
+	}
+
+	useEffect(() => {
+		getAccountsInfo();
 	}, []);
+
+	function deleteAccount(accountId) {
+		if (!window.confirm('Você realmente quer apagar esse registro?')) {
+			return;
+		}
+		const promise = axios.delete(
+			`http://localhost:5000/accounts/${accountId}`,
+			{
+				headers: { Authorization: `Bearer ${userData.token}` },
+			}
+		);
+		promise
+			.then(() => {
+				getAccountsInfo();
+			})
+			.catch((err) => {
+				alert(err.response.data);
+			});
+	}
 
 	const showAccountsState = () => {
 		if (accountList === null) {
@@ -37,10 +60,14 @@ export default function Ledger() {
 		return (
 			<AccountList>
 				{accountList.map(({ _id, type, date, value, description }) => (
-					<Account key={_id} type={type} id={_id}>
+					<Account key={_id} type={type}>
 						<p>{date}</p>
 						<p>{description}</p>
-						<p>{value}</p>
+						<p>{value.toFixed(2).replace('.', ',')}</p>
+						<ion-icon
+							name="close-outline"
+							onClick={() => deleteAccount(_id)}
+						/>
 					</Account>
 				))}
 			</AccountList>
@@ -55,7 +82,7 @@ export default function Ledger() {
 				{accounts}
 				<Balance balance={balance}>
 					<p>SALDO</p>
-					<p>{Math.abs(balance)}</p>
+					<p>{Math.abs(balance).toFixed(2).replace('.', ',')}</p>
 				</Balance>
 			</Accounts>
 		</Container>
@@ -83,6 +110,15 @@ const Accounts = styled.div`
 	height: 100%;
 	width: 100%;
 	background-color: #ffffff;
+
+	div::-webkit-scrollbar {
+		display: none;
+	}
+
+	div {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 `;
 
 const AccountList = styled.div`
@@ -112,6 +148,13 @@ const Account = styled.div`
 	p:nth-of-type(3) {
 		margin-left: auto;
 		color: ${(props) => (props.type === 'deposit' ? '#03AC00' : '#C70000')};
+	}
+
+	ion-icon {
+		margin-top: 2px;
+		min-width: 16px;
+		color: #c6c6c6;
+		cursor: pointer;
 	}
 `;
 
